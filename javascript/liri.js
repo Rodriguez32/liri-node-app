@@ -1,39 +1,51 @@
 require("dotenv").config();
+const fs = require("fs");
+var keys = require("./keys.js");
+var request = require("request");
 
-var keys = require("../javascript/keys.js");
+var Twitter = require('twitter');
+var Spotify = require('node-spotify-api');
 
-
+var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
-var myTweets = function() {
-    var Twitter = require("twitter");
 
-}
+//Twitter API
+var myTweets = function () {
 
-var params = {
-    screen_name: "roman_azalea",
-    count: 20
-};
+   
+    var params = {
+        user_id: "@roman_azalea",
+        count: 20
+    };
 
-client.get("https://twitter.com/roman_azalea",params,function(error,tweets,response){
-    if (error){
-        console.log("Error Ocurred");
+    client.get("statuses/user_timeline", params, function (error, tweets, response) {
+        if (error) {
+            console.log("Error Ocurred " + error);
         } else {
             console.log("My 20 Most Recent Tweets");
-            console.log("");
+            console.log(tweets);
         }
-});
+    });
+
+    
+}
 
 myTweets();
 
+//Spotify API
 
-var spotify = new Spotify(keys.spotify);
 
-// // The output does show what it says in random.txt
-// var fs = require("fs");
+// var spotify = new Spotify(keys.spotify);
 
-// var data = fs.readFileSync("../random.txt");
 
-// console.log(data.toString());
-// console.log("Program Ended");
+
+
+
+
+
+
+
+
+
 
