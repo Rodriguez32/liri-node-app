@@ -36,7 +36,7 @@ myTweets();
 //Spotify API
 
 
-// var spotify = new Spotify(keys.spotify);
+
 
 
 
