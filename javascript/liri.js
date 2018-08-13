@@ -9,7 +9,7 @@ var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
-var arg = process.argv
+var args = process.argv;
 var command = "";
 
 
@@ -74,4 +74,42 @@ var spotifyThisSong = function(trackquery) {
 
 spotifyThisSong();
 
+// OMBD MOVIE//
 
+var movieThis = function(movieQuery) {
+    
+    if (movieQuery === undefined) {
+        movieQuery = "mr.nobody";
+    }
+
+    request("http://www.ombdapi.com/?t=" + movieThis + "&y=&plot=short&apikey=trilogy", function(error,response,body){
+        if(!error && response.statusCode === 200) {
+            console.log("Title of the movie: " + JSON.parse(body).Title);
+            console.log("Year the movie came out: " + JSON.parse(body).Year);
+            console.log("IDMB Rating of the movie: " + JSON.parse(body).imdbRating);
+            console.log("Country Produced: " + JSON.parse(body).Country);
+            console.log("Language of the movie: " + JSON.parse(body).Language);
+            console.log("Plot of the movie: " + JSON.parse(body).Plot);
+            console.log("Actors in the movie: " + JSON.parse(body).Actors);
+        
+        for(var i=0; i <JSON.parse(body).Ratings.length; i++){
+            if(JSON.parse(body).Ratings[i].Source === "My Sister's Keeper") {
+                console.log("My Sister's Keeper Rating: " + JSON.parse(body).Ratings[i].Value);
+                if(JSON.parse(body).Ratings[i].Website !== undefined){
+                    console.log("My Sister's Keeper URL: " + JSON.parse(body).Ratings[i].Website);
+                }
+            }
+        }
+        
+        }
+
+    });
+}
+
+// if(command === "my-tweets") {
+// 	myTweets();
+// } else if(command === "spotify-this-song") {
+// 	spotifyThisSong(args);
+// } else if(command === "movie-this") {
+// 	movieThis(args);
+// } else if(command === "do-what-it-says");
